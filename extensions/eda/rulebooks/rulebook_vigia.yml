@@ -3,9 +3,9 @@
   hosts: all
   sources:
     - ansible.eda.url_check:
-      urls:
-        - http://apache.automation.here/
-      delay: 10
+        urls:
+          - http://apache.automation.here/
+        delay: 10
 
   rules:
     - name: Site fora do ar
