@@ -1,0 +1,16 @@
+---
+- name: Rulebook que vigia uma página web
+  hosts: web
+  sources:
+    - ansible.eda.url_check:
+      urls:
+        - http://apache.automation.here
+      delay: 10
+
+  rules:
+    - name: Site fora do ar
+      condition: event.url_check.status == "down"
+      action:
+        run_job_template:
+          name: ReiniciaApache
+          organization: Default
