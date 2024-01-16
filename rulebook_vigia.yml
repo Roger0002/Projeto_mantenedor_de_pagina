@@ -1,10 +1,10 @@
 ---
 - name: Rulebook que vigia uma página web
-  hosts: web
+  hosts: all
   sources:
     - ansible.eda.url_check:
       urls:
-        - http://apache.automation.here
+        - http://apache.automation.here/
       delay: 10
 
   rules:
