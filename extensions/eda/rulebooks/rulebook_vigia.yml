@@ -1,6 +1,6 @@
 ---
 - name: Rulebook que vigia uma página web
-  hosts: all
+  hosts: apache.automation.here
   sources:
     - ansible.eda.url_check:
         urls:
