@@ -2,7 +2,7 @@
   hosts: apache.automation.here
   tasks:
     - name: Restart do Apache
-      ansible.builin.service:
+      ansible.builtin.service:
         name: httpd
         state: restarted
 ...
