@@ -1,0 +1,15 @@
+---
+- name: Rulebook que vigia uma página web
+  hosts: apache.automation.here
+  sources:
+    - ansible.eda.url_check:
+        urls:
+          - http://apache.automation.here/
+        delay: 10
+
+  rules:
+    - name: Site fora do ar
+      condition: event.url_check.status == "down"
+      action:
+        run_playbook:
+          name: playbook_restart_apache.yml

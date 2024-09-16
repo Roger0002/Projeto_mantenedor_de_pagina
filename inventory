@@ -1,0 +1,8 @@
+[app]
+apache.automation.here
+
+[tools]
+idm.automation.here
+
+[db]
+postgresql.automation.here
