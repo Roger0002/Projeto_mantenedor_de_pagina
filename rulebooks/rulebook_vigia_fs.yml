@@ -4,7 +4,7 @@
   sources:
     - name: asdf
       ansible.eda.journald:
-        match: "ALL"
+        match: "_SYSTEMD_UNIT=sshd.service"
 
   rules:
     - name: Mostra tudo
