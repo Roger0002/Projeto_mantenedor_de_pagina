@@ -4,7 +4,7 @@
   sources:
     - name: asdf
       ansible.eda.journald:
-        match: "_SYSTEMD_UNIT=sshd.service"
+        match: "ALL"
 
   rules:
     - name: Mostra tudo
@@ -12,5 +12,6 @@
       action:
         print_event:
           pretty: true
-            #          var_root:
-            #            journald.message: journald.message
+          var_root:
+            journald.message: journald.message
+...
