@@ -1,6 +1,7 @@
 ---
 - name: Rulebook que vigia eventos do SystemD
   hosts: apache.automation.here
+  become: true
   sources:
     - name: asdf
       ansible.eda.journald:
