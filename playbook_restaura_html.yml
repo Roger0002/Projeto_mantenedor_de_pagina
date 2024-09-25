@@ -1,0 +1,11 @@
+- name: Play que restaura o arquivo HTML da aplicação
+  hosts: apache.automation.here
+  tasks:
+    - name: restaura HTML
+      ansible.builtin.copy:
+        src: aplicacao_importante.html
+        dest: /var/www/html
+        mode: 0644
+        owner: root
+        group: root
+...

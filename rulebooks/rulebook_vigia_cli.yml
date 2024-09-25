@@ -4,12 +4,22 @@
   sources:
     - ansible.eda.url_check:
         urls:
-          - http://apache.automation.here/
+          - http://apache.automation.here/aplicacao_importante.html
         delay: 10
 
   rules:
-    - name: Site fora do ar
-      condition: event.url_check.status == "down"
+    - name: Toma uma ação devido à indisponibilidade por serviço fora
+      condition: >
+        event.url_check.status == "down"
+        and event.url_check.error_msg is defined
       action:
         run_playbook:
           name: playbook_restart_apache.yml
+
+    - name: Toma uma ação devido à indisponibilidade por arquivo HTML ausênte
+      condition: >
+        event.url_check.status == "down"
+        and event.url_check.status_code == 404
+      action:
+        run_playbook:
+          name: playbook_restaura_html.yml

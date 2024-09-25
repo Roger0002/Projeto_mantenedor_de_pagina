@@ -9,8 +9,19 @@
 
   rules:
     - name: Site fora do ar
-      condition: event.url_check.status == "down"
+      condition: >
+        event.url_check.status == "down"
+        and event.url_check.error_msg is defined
       action:
         run_job_template:
           name: ReiniciaApache
+          organization: Default
+
+    - name: Toma uma ação devido à indisponibilidade por arquivo HTML ausênte
+      condition: >
+        event.url_check.status == "down"
+        and event.url_check.status_code == 404
+      action:
+        run_job_template:
+          name: ArrumaHTML
           organization: Default
