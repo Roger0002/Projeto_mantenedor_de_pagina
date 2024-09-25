@@ -8,7 +8,7 @@
 
   rules:
     - name: Mostra tudo
-      condition: true
+      condition: event.journald._comm == 'sudo'
       action:
         print_event:
           pretty: true
