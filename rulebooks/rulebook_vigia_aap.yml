@@ -1,5 +1,6 @@
 ---
 - name: Rulebook que vigia uma página web
+  hosts: all
   sources:
     - ansible.eda.url_check:
         urls:
