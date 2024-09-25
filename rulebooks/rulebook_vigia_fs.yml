@@ -10,6 +10,7 @@
     - name: Show everything
       condition: true
       action:
-        print_event:
-          pretty: true
+        debug:
+          var: event.journald.message
+
 ...
