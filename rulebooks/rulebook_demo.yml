@@ -1,0 +1,15 @@
+---
+- name: Rulebook que vigia uma página web
+  hosts: all
+  sources:
+    - ansible.eda.url_check:
+        delay: 10
+        urls:
+          - http://apache.automation.here/aplicacao_importante.html
+
+  rules:
+    - name: Regra que sempre casa e exibe os detalhes do evento
+      condition: 2 > 1
+      action:
+        print_event:
+          pretty: true

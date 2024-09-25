@@ -8,7 +8,7 @@
         delay: 10
 
   rules:
-    - name: Site fora do ar
+    - name: Toma uma ação devido à indisponibilidade por serviço fora
       condition: >
         event.url_check.status == "down"
         and event.url_check.error_msg is defined
