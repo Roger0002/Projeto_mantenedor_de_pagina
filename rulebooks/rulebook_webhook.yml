@@ -10,8 +10,7 @@
 
   rules:
     - name: Mostra os eventos que vem chegando
-      condition: event.payload is defined
+      condition: event.payload.mensagem == "Evento C"
       action:
         print_event:
           pretty: true
-#msg: "{{ event.payload }}"
