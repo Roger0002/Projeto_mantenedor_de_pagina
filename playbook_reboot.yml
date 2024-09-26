@@ -1,6 +1,6 @@
 ---
 - name: Faz o reboot da máquina db2
-  hosts: db2.lab5.example.com
+  hosts: apache.automation.here
   tasks:
     - name: Tarefa de reboot
       ansible.builtin.reboot:

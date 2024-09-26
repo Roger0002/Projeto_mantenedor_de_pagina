@@ -16,7 +16,7 @@
           pretty: true
 
     #- name: Executa um Job Template
-    #  condition: event.payload.servidor == "db2.lab5.example.com"
+    #  condition: event.payload.servidor == "apache.automation.here"
     #  action:
     #    run_job_template:
     #      name: RebootMaquina
