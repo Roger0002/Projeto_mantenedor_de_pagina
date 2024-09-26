@@ -12,7 +12,6 @@
     - name: Mostra os eventos que vem chegando
       condition: event.payload is defined
       action:
-        run_module:
-          name: ansible.builtin.debug
-          module_args:
-            msg: "{{ event.payload }}"
+        print_event:
+          pretty: true
+#msg: "{{ event.payload }}"
