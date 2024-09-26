@@ -1,0 +1,18 @@
+---
+- name: Escuta eventos por meio de um webhook
+  hosts: all
+
+  sources:
+    - name: Escuta eventos por meio da porta 5000
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+
+  rules:
+    - name: Mostra os eventos que vem chegando
+      condition: event.payload is defined
+      action:
+        run_module:
+          name: ansible.builtin.debug
+          module_args:
+            msg: "{{ event.payload }}"
