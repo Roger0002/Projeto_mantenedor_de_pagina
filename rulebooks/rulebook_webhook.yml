@@ -1,6 +1,6 @@
 ---
 - name: Escuta eventos por meio de um webhook
-  hosts: all
+  hosts: localhost
 
   sources:
     - name: Escuta eventos por meio da porta 5000
