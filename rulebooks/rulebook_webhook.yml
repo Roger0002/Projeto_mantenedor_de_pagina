@@ -16,7 +16,9 @@
           pretty: true
 
     - name: Executa um Job Template
-      condition: event.payload.servidor == "apache.automation.here"
+      condition: >
+        event.payload.servidor == "apache.automation.here" and
+        event.payload.ordem == "reiniciar"
       action:
         run_job_template:
           name: RebootMaquina
