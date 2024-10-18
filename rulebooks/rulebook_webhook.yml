@@ -10,7 +10,8 @@
 
   rules:
     - name: Mostra os eventos que vem chegando
-      condition: event.payload.mensagem == "Evento B"
+      #condition: event.payload.mensagem == "Evento B"
+      condition: 2 > 1
       action:
         print_event:
           pretty: true
