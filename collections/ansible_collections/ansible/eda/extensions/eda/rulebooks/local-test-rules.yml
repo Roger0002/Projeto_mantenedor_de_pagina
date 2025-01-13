@@ -6,7 +6,7 @@
       ansible.eda.watchdog:
         path: "{{src_path}}"
         recursive: true
-        ignore_regexes: ['.*\.pytest.*', '.*__pycache__.*', '.*/.git.*']
+        ignore_regexes: [.*\.pytest.*, .*__pycache__.*, .*/.git.*]
   rules:
     - name: run tests 1
       condition: event.type == "DirModifiedEvent"
@@ -25,4 +25,3 @@
       action:
         print_event:
           var_root: output
-...

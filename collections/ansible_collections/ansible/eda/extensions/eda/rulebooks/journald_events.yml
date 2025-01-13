@@ -4,7 +4,7 @@
   sources:
     - name: Match all messages
       ansible.eda.journald:
-        match: "ALL"
+        match: ALL
   rules:
     - name: Print sudo journald event message
       condition: event.journald._comm == 'sudo'
@@ -13,4 +13,3 @@
           pretty: true
           var_root:
             journald.message: journald.message
-...

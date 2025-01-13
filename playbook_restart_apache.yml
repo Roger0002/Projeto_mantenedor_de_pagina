@@ -1,3 +1,4 @@
+---
 - name: Play que faz o restart do Apache
   hosts: apache.automation.here
   tasks:
@@ -5,4 +6,3 @@
       ansible.builtin.service:
         name: httpd
         state: restarted
-...
