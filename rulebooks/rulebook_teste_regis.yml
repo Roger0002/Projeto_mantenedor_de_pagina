@@ -1,0 +1,788 @@
+#------------------------------------------------------------------------------------------------------------------------------------------
+- name: "(nimsoft.yml - 0.0) -- Escutando eventos do Nimsoft via AlertManager"
+#------------------------------------------------------------------------------------------------------------------------------------------
+  hosts: all
+  sources:
+    - ansible.eda.alertmanager:
+        host: 0.0.0.0
+        port: 6000
+
+  rules:
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificada mensagem enviada pelo playbook <check_port6000_eda.yml>"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("SUA Is EDA active", ignorecase=true)
+      action:
+        run_job_template:
+          name: execute-test-eda
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Nimsoft"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Robot.*is inactive", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-process-robot
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Syslog Switches"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("A MAJOR SYSLOG EVENT HAS OCCURRED", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-nimsoft
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Device has stopped"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Device has stopped responding to polls", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-nimsoft
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Average Disk Free"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Average.*disk.*is now.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-average-disk-free
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Average Physical Memory Usage"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Average.*physical memory usage is now.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-average-physical-memory-usage
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Average Memory Usage"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Average.*\) memory usage is now.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-average-memory-usage
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Average Swap Memory Usage"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Average.*swap memory usage is now.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-average-swap-memory-usage
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificar alerta de Average CPU Total"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Average.*cpu.*is now.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-infra-average-cpu-total
+          organization: Banco BV INFRA
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Centrify"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("adclient.*is not running", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-process-centrifydc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do uc4"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Agente.*ucxj.*not.*running", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-process-automic-smgr
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Guardicore"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Guardicore Agent Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-guardicore
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Recorder DiskManager Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder DiskManager Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do CrowdStrike"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("CrowdStrike Falcon Sensor Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-crowdstrike
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do uc4 servicemanager"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("UC4.ServiceManager.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-uc4-servicemanager
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do ucybsmgr-listener"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("ucybsmgr.*listener.*not.*running", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-ucybsmgr
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do XBrokerWCFHosting"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("XBrokerWCFHosting.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-xbrokerwcfhosting
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Data Export"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Data Export.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-dataexport
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do osg dash"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("OSG.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-osg
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Recorder Import Export Engine"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Import Export Engine.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-iee
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Recorder Alarm Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Alarm Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-as
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Recorder Content Server"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Content Server.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-cs
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Server Agent no Veritas"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("SQL Server Agent .*SQLVERITASDBA.*.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-sqlagent
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Recorder Compressor Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Compressor Service .*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-comps
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Integracao entre o Spectrum x Service Now esta com problemas"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("\b(?:Integracao|Integração)\s+entre\s+(?:o\s+)?Spectrum\s+x\s+Service\s+Now\s+esta\s+com\s+problemas\b", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-spec-servnow
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico I360 Speech Categorization Tomcat"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("I360 Speech Categorization Tomcat.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-i360-sctomcat
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Exceller - ScheduledReports - Marsh JLT"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Exceller \- ScheduledReports \- Marsh JLT{1}", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-exceller-scherepo
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Remote Desktop Licensing"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Remote Desktop Licensing.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-remote-dl
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Exceller Windows Services"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Exceller Windows Services.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-exceller-ws
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Bco.SGPR.Base.GeradorPrecos"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Bco.SGPR.Base.GeradorPrecos.WinServices.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bco-sgpr
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Speech Transcription System"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("SpeechTranscriptionSystem.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-speech-ts
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Impact System Monitoring Agent"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Impact System Monitoring Agent.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-impact-sma
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Varonis Audit Event Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Varonis Audit Event Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-varonis-aes
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico I360 Secure Web Gateway"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("I360 Secure Web Gateway.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-i360-secure-wg
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Presenta"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Presenta.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-presenta
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Wittel XML Validator v2"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("WittelXMLValidatorv2.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-wittel-xv2
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Impact Configuration & Monitoring Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Impact Configuration & Monitoring Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-i360-impact-cms
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta de processo do Wittel WRS Solution Monitor Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Wittel WRS Solution Monitor Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-wittel-wrs-sms
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico RED Identity Management Deferred"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("RED Identity Management Deferred Processing Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-red-imd
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Configuration Server [csp_mor_01_p]"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Configuration Server \[csp_mor_01_p\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-cs-01
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Configuration Server [csp_mor_02_p]"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Configuration Server \[csp_mor_02_p\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-cs-02
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Configuration Server [csp_mor_03_p]"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Configuration Server \[csp_mor_03_p\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-cs-03
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Configuration Server [csp_mor_04_p]"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Configuration Server \[csp_mor_04_p\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-cs-04
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Archiver Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Archiver Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-asvr
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Windows Remote Management"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Windows Remote Management \(WS-Management\).*stopped.*", ignorecase=true)
+      action:
+         run_job_template:
+           name: selfhealing-remote-management
+           organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys VP Media Control Platform"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys VP Media Control Platform.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-vp-mcp
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Unidade Negócio System - SMP"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Unidade Negócio System - SMP.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-uns-smp
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico DFS Replication"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("DFS Replication.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-dfs-replication
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico DNS Server"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("DNS Server.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-dns-server
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico MTA-P"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("MTA-P.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-mta-p
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Administrator Extension"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Administrator Extension.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-ae
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Servidor WCF-Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Servidor WCF-Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-srv-wcf
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico B3 Servidor Web API Público(1)-Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("B3 Servidor Web API Público\(\d\)-Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-b3-srv-wap1
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Servidor de Importação de Liquidação Financeira - Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Servidor de Importação de Liquidação Financeira - Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-srv-silf
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Crivo Workflow - Centralizador de Dados"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Crivo Workflow - Centralizador de Dados.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-crivo-wf-cd
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço QlikView Management Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("QlikView Management Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-qlikview-ms
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF APE de Garantias-Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF APE de Garantias-Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-ape-gs
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys DB Server"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys DB Server \[dbserver.*\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-db-svr
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys DB Server [log_dbserver_mor_p]"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys DB Server \[log_dbserver_mor_p\].*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-db-server-log
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico Genesys Pulse Collector"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Genesys Pulse Collector.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-genesys-pul-collec
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço SGC Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("SGC_Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-sgc-service
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço QlikView Web Server"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("QlikView Webserver.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-qlikview-wsrv
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço QlikView Server"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("QlikView Server.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-qlikview-server
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço QlikView Directory Service Connector"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("QlikView Directory Service Connector.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-qlikview-dir-sc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Consolidator Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Consolidator Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-con-ser
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder IP Capture Engine"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder IP CaptureEngine.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-ip-ce
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Workflow Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Workflow Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-wk-serv
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Redundancy Controller"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Redundancy Controller.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-redu-ctl
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Integration Service"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Integration Service.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-int-serv
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Recorder Tomcat"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Recorder Tomcat.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-recorder-tomcat
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Comunicador – SMP"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Comunicador.*SMP.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-com-smp
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do ILMT"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Agente.*BESClient.*is not running", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-ilmt
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Monitor Processos BOVESPA – Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Monitor Processos BOVESPA.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-mpb-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Servidor de Monitoração-Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Servidor de Monitora.*o.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-srv-monit-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Serviço de Monitoração de Banco de Dados-Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Servi.*o de Monitora.*o de Banco de Dados.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-smbd-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Manipulação de Dados TES – Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Manipula.*de Dados TES.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-mdt-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Unidade Negócio SMP - Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Unidade Neg.*cio SMP.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-un-neg-smp
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Business Parameter – Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Business Parameter.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-buspa-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico BVMF Servidor de Exportação/Importação de Arquivos de Alocação -Sinacor"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("BVMF Servidor de Exporta.*Importa.*o de Arquivos de Aloca.*o.*Sinacor.*stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-bvmf-exim-aa-snc
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do filebeat WAS DES"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("(?i)Monitoracao Filebeat - WAS - DES", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-filebeat-was-des
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do filebeat WAS UAT"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("(?i)Monitoracao Filebeat - WAS - UAT", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-filebeat-was-uat
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do filebeat TOMCAT DES"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("(?i)Monitoracao Filebeat - TOMCAT - DES", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-filebeat-tomcat-des
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do filebeat TOMCAT UAT"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("(?i)Monitoracao Filebeat - TOMCAT - UAT", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-filebeat-tomcat-uat
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do servico do filebeat WINDOWS DES"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("(?i)Monitoracao Filebeat - WINDOWS - DES", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-filebeat-windows-des
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Urbancode em servidores Windows"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("^IBM UrbanCode Deploy Agent \(ibm-urbancode-deploy-agent\) - Expected state running, found state stopped.*", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-urbancode-win
+          organization: Banco BV SRE
+
+    #---------------------------------------------------------------------------------------------------------------------------------------
+    - name: "(nimsoft.yml - 0.0) -- Identificado alerta do serviço Urbancode em servidores Linux"
+    #---------------------------------------------------------------------------------------------------------------------------------------
+      condition: event.payload is regex("Agente UrbanCode.*is not running", ignorecase=true)
+      action:
+        run_job_template:
+          name: selfhealing-urbancode-lnx
+          organization: Banco BV SRE
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# TÉRMINO
+#------------------------------------------------------------------------------------------------------------------------------------------
