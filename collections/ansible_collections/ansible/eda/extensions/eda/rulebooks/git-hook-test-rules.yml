@@ -16,4 +16,3 @@
       action:
         print_event:
           var_root: output
-...

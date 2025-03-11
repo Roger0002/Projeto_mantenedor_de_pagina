@@ -14,11 +14,10 @@
   sources:
     - ansible.eda.webhook:
         port: "{{ port | default(5555) }}"
-        host: 0.0.0.0
+        host: "0.0.0.0"
   rules:
     - name: Webhook rule
       condition: true
       action:
         print_event:
           pretty: true
-...

@@ -1,3 +1,4 @@
+---
 - name: GitHub Deploy Git Hook Rules
   hosts: all
   sources:
@@ -6,8 +7,8 @@
         queue_name: "{{queue_name}}"
       filters:
         - benthomasosn.eda.json_filter:
-            include_keys: ['clone_url']
-            exclude_keys: ['*_url', '_links', 'base', 'sender', 'owner', 'user']
+            include_keys: [clone_url]
+            exclude_keys: ["*_url", _links, base, sender, owner, user]
         - benthomasosn.eda.dashes_to_underscores:
   rules:
     - name: Pull Request Open
@@ -56,4 +57,3 @@
       condition: event.payload is defined
       action:
         debug:
-...
