@@ -10,6 +10,7 @@
 
   rules:
     - name: Mostra os eventos que vem chegando
+      enabled: false
       #condition: event.payload.mensagem == "Evento B"
       condition: 2 > 1
       action:
