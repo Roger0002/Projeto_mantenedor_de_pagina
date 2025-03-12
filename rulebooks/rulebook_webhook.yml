@@ -22,5 +22,5 @@
         event.payload.ordem == "reiniciar"
       action:
         run_job_template:
-          name: RebootMaquina
+          name: Validação - Garantia do mod_ssl
           organization: Default
