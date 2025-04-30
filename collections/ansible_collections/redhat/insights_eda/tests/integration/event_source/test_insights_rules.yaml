@@ -1,3 +1,4 @@
+---
 - name: test insights source plugin
   hosts: localhost
   sources:
@@ -9,7 +10,7 @@
       condition: event.payload.eventdata == "insights"
       action:
         debug:
-          msg: "Rule fired successfully"
+          msg: Rule fired successfully
 
     - name: shutdown
       condition: event.payload.shutdown is defined
