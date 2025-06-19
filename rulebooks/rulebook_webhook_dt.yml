@@ -7,9 +7,9 @@
         port: 5000
 
   rules:
-    - name: API Endpoint not available
-      condition: event.payload.eventData["event.name"] is match ("Monitoring not available")
+    - name: Mostra os eventos que vem chegando
+      #condition: event.payload.mensagem == "Evento B"
+      condition: 2 > 1
       action:
-        run_job_template:
-          name: "Trigger test playbook"
-          organization: "Default"    
+        print_event:
+          pretty: true
