@@ -6,6 +6,7 @@
       dynatrace.event_driven_ansible.dt_webhook:
         host: 0.0.0.0
         port: 5000
+        token: sjhdkfhskdjfhksdjhfskdjhf
 
   rules:
     - name: Problem payload Dynatrace for CPU issue
