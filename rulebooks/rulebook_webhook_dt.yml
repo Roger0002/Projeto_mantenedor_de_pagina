@@ -7,9 +7,9 @@
         port: 5000
 
   rules:
-    - name: Mostra os eventos que vem chegando
-      #condition: event.payload.mensagem == "Evento B"
-      condition: 2 > 1
+    - name: Problem payload Dynatrace for CPU issue
+      condition: event.title is match("CPU saturation")
       action:
-        print_event:
-          pretty: true
+        run_job_template:
+          name: "Remediate CPU saturation issue"
+          organization: "Default"
