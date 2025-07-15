@@ -10,8 +10,7 @@
 
   rules:
     - name: Lalá ficou lelé porque lilí deu loló pro lulú
-      condition: event.title is match("CPU saturation")
+      condition: 2 > 1
       action:
-        run_job_template:
-          name: "Remediate CPU saturation issue"
-          organization: "Default"
+        print_event:
+          pretty: true
