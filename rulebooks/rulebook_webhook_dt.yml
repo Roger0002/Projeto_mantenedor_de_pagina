@@ -9,7 +9,7 @@
         token: sjhdkfhskdjfhksdjhfskdjhf
 
   rules:
-    - name: Problem payload Dynatrace for CPU issue
+    - name: Lalá ficou lelé porque lilí deu loló pro lulú
       condition: event.title is match("CPU saturation")
       action:
         run_job_template:
