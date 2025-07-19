@@ -2,8 +2,7 @@
 - name: Rulebook que vigia o Insights
   hosts: all
   sources:
-    - name: Invocação do plugin do EDA
-      redhat.insights_eda.insights:
+    - redhat.insights_eda.insights:
         host: 0.0.0.0
         port: 5000
 
