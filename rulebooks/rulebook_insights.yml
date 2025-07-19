@@ -3,7 +3,7 @@
   hosts: all
   sources:
     - name: Invocação do plugin do EDA
-      redhatinsights.eda.insights:
+      redhat.insights_eda.insights:
         host: 0.0.0.0
         port: 5010
 
