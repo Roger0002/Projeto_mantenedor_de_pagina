@@ -5,7 +5,7 @@
     - name: Invocação do plugin do EDA
       redhat.insights_eda.insights:
         host: 0.0.0.0
-        port: 5010
+        port: 5000
 
   rules:
     - name: Regra que sempre casa e exibe os detalhes do evento
