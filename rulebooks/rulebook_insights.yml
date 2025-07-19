@@ -1,0 +1,15 @@
+---
+- name: Rulebook que vigia o Insights
+  hosts: all
+  sources:
+    - name: Invocação do plugin do EDA
+      redhatinsights.eda.insights:
+        host: 0.0.0.0
+        port: 5010
+
+  rules:
+    - name: Regra que sempre casa e exibe os detalhes do evento
+      condition: 2 > 1
+      action:
+        print_event:
+          pretty: true
