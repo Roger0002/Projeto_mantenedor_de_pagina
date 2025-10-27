@@ -12,7 +12,7 @@
  
     - name: Libera Swap
       condition: "event.payload.trigger_name == 'Lack of free swap space on {{ event.payload.host_host }}'"
-      action:
+      actions:
         - run_job_template:
             name: Servico_Libera_Memoria_Swap
             organization: OMIS
