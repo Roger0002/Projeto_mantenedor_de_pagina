@@ -1,0 +1,33 @@
+---
+- name: Escuta eventos por meio de um webhook
+  hosts: localhost
+ 
+  sources:
+    - name: Escuta eventos por meio da porta 5001
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5001
+       
+  rules:
+ 
+    - name: Libera Swap
+      condition: "event.payload.trigger_name == 'Lack of free swap space on {{ event.payload.host_host }}'"
+      action:
+        - run_job_template:
+            name: Servico_Libera_Memoria_Swap
+            organization: OMIS
+            job_args:
+              extra_vars:
+                host: "{{ event.payload.host_host }}.energia.org.br"
+ 
+    - name: Verificando Serviços Systemd (systemctl)
+      condition: "event.payload.trigger_name == 'Serviço {{ event.payload.service }} indisponível em {{ event.payload.host_host }}'"
+      actions:
+        - run_job_template:
+            name: Servicos_Systemd
+            organization: OMIS
+            job_args:
+              extra_vars:
+                host: "{{ event.payload.host_host }}.energia.org.br"
+                post_servico: "{{ event.payload.service }}"
+                post_comando: started
