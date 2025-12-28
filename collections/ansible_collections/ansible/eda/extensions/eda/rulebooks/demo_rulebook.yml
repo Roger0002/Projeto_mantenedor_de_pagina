@@ -14,12 +14,11 @@
     - name: Demo Source
       ansible.eda.generic:
         payload:
-          - msg: "Welcome"
-          - msg: "Adios"
+          - msg: Welcome
+          - msg: Adios
   rules:
     - name: Say Hello
       condition: event.msg == "Welcome"
       action:
         debug:
-          msg: "Hello from EDA"
-...
+          msg: Hello from EDA

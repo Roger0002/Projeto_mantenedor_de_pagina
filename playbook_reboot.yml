@@ -4,4 +4,3 @@
   tasks:
     - name: Tarefa de reboot
       ansible.builtin.reboot:
-...
