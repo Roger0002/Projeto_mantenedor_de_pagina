@@ -31,3 +31,9 @@
         run_job_template:
           name: Teste com credencial de múltiplos usuários
           organization: Default
+
+    - name: Mostra os eventos que vem chegando
+      condition: 2 > 1
+      action:
+        print_event:
+          pretty: true
