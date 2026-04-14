@@ -26,7 +26,7 @@
         
   rules:
     - name: Executa um Job Template
-      condition: event.body.payload.Evento == "Mensagem oriunda da fila eda do SQS" and event.body.payload.Origem == "Produção"
+      condition: event.body.Evento == "Mensagem oriunda da fila eda do SQS" and event.body.Origem == "Produção"
       action:
         run_job_template:
           name: Teste com credencial de múltiplos usuários
