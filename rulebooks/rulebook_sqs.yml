@@ -25,8 +25,11 @@
         max_number_of_messages: 1
         
   rules:
-    - name: Regra que sempre casa e exibe os detalhes do evento
-      condition: 2 > 1
+    - name: Executa um Job Template
+      condition: >
+        event.payload.Evento == "Mensagem oriunda da fila eda do SQS" and
+        event.payload.Origem == "Produção"
       action:
-        print_event:
-          pretty: true
+        run_job_template:
+          name: Teste com credencial de múltiplos usuários
+          organization: Default
