@@ -3,6 +3,7 @@
   hosts: all
   sources:
     - ansible.eda.aws_sqs_queue:
+        name: eda
         endpoint_url: https://sqs.us-east-2.amazonaws.com/964272839561/eda
         region: us-east-2
         delay_seconds: 10
